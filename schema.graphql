@@ -1,0 +1,42 @@
+###################### DAI #########################
+
+# Just DAI, ignoring SIN, MKR, etc. for now
+type Token @entity {
+    id: ID!
+    amount: BigInt!
+    totalMinted: BigInt!
+    totalBurned: BigInt!
+    totalUsersEver: Int!
+}
+
+type User @entity {
+    id: ID!                     # Eth User address
+    daiBalance: BigInt!
+    transferFrom: [Transfer!]! @derivedFrom(field: "from")
+    transfersTo: [Transfer!]! @derivedFrom(field: "to")
+    mints: [Mint!]! @derivedFrom(field: "minter")
+    burns: [Burn!]! @derivedFrom(field: "burner")
+    txCount: Int!               # Needed, since cant count derivedFrom.
+}
+
+type Transfer @entity {
+    id: ID!                     # tx hash
+    timestamp: Int!
+    from: Bytes!
+    to: Bytes!
+    amount: BigInt!             # in DAI
+}
+
+type Mint @entity {
+    id: ID!
+    timestamp: Int!
+    minter: Bytes!
+    amount: BigInt!
+}
+
+type Burn @entity {
+    id: ID!
+    timestamp: Int!
+    burner: Bytes!
+    amount: BigInt!
+}
