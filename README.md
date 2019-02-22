@@ -3,7 +3,11 @@
 
 ## Events and Contracts
 
-The Maker subgraph currently only tracks DAI, as the Graph Node needs to support anonymous functions before events in the CDP contracts can be tracked. This support will be added soon
+The Maker subgraph currently only tracks DAI, as the Graph Node needs to support anonymous functions before events in the CDP contracts can be tracked. This support will be added soon.
+
+The SaiVox contract is not that important, so it is left out. It focuses on keeping the value of DAI near $1.00, by calling to third party price providers. This subgraph focuses more on DAI and CDPs so this isn't needed.
+
+The SaiTop contract is not used either. This contract emits events when global settlement happens. Global settlement has never happened.
 
 ## Setting up the Subgraph
 

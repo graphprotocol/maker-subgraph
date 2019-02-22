@@ -29,3 +29,64 @@ dataSources:
         - event: Burn(address,uint256)
           handler: handleBurn
       file: ./src/mappings/dai.ts
+# NOTE - THESE EVENTS BELOW CANT BE SOURCED UNTIL WE SUPPORT ANONYOMOUS EVENTS
+#  - kind: ethereum/contract
+#    name: SaiTub-(CDP-Engine)
+#    network: mainnet
+#    source:
+#      address: "0x448a5065aebb8e423f0896e6c5d525c040f59af3"
+#      abi: SaiTub
+#    mapping:
+#      kind: ethereum/events
+#      apiVersion: 0.0.1
+#      language: wasm/assemblyscript
+#      entities:
+#        - TODO
+#      abis:
+#        - name: SaiTub
+#          file: ./abis/saiTub.json
+#      eventHandlers:
+#        - event: LogNewCup(address,bytes32)
+#          handler: handleLogNewCup
+#        - event: open(bytes32)
+#          handler: handleOpen
+#        - event: give(bytes32,address)
+#          handler: handleGive
+#        - event: lock(bytes32,uint256)
+#          handler: handleLock
+#        - event: free(bytes32,uint256)
+#          handler: handleFree
+#        - event: draw(bytes32,uint256)
+#          handler: handleDraw
+#        - event: wipe(bytes32,uint256)
+#          handler: handleWipe
+#        - event: shut(bytes32)
+#          handler: handleShut
+#        - event: bite(bytes32)
+#          handler: handleBite
+#      file: ./src/mappings/saiTub.ts
+#  - kind: ethereum/contract
+#    name: SaiTap-(CDP-Liquidator)
+#    network: mainnet
+#    source:
+#      address: "0xbda109309f9fafa6dd6a9cb9f1df4085b27ee8ef"
+#      abi: SaiTap
+#    mapping:
+#      kind: ethereum/events
+#      apiVersion: 0.0.1
+#      language: wasm/assemblyscript
+#      entities:
+#        - TODO
+#      abis:
+#        - name: SaiTap
+#          file: ./abis/saiTap.json
+#      eventHandlers:
+#        - event: mold(bytes32,uint256) # emitted once 418 days ago
+#          handler: handleMold
+#        - event: heal() # 4 times, all 232 days ago
+#          handler: handleHeal
+#        - event: bust(uint256) # 0xaf378ce5
+#          handler: handleBust
+#        - event: boom(uint256) # 0xb443a085
+#          handler: handleBoom
+#      file: ./src/mappings/saiTap.ts

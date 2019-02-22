@@ -40,3 +40,81 @@ type Burn @entity {
     burner: Bytes!
     amount: BigInt!
 }
+
+############################CDPS##############################
+
+# Tub - aka CDP Record System
+# Tub holds all WETH, 200,000,000, on which it hands out DAI. All CDPS/Cups point to here
+# It has an almost equivalent amount of PETH, but not exactly same
+# Was BigFloat! - refers to the type it was in Vulcanize GraphQL api
+type Tub @entity {
+    id: ID!
+    cups: [Cup!]!
+    cupCount: Int!
+    peth: BigInt!           # total PETH holdings
+    weth: BigInt!           # total WETH Holdings
+}
+
+# aka CDP
+type Cup @entity {
+    act: Action!            # Most recent cup action
+    art: BigInt!            # Outstanding debt DAI                 Was BigFloat!
+    block: Int!             # Block at most recent action
+    deleted: Boolean!       # True if the cup has been shut
+    id: ID!                 # Unique Cup Id
+    ink: BigInt!            # Collateral PETH                      Was BigFloat!
+    ire: BigInt!            # Collateral less fee                  Was BigFloat!
+    lad: String!            # Cup owner
+    #    pip: BigInt!            # Current USD/ETH price           Was BigFloat! - not needed?
+    ratio: BigInt           # Current collateralisation ratio      Was BigFloat
+    tab: BigInt             # Collateral USD                       Was BigFloat
+    time: Int!              # Timestamp of most recent action
+    actions: [Action!]      # Cup actions
+}
+
+# Action a cup can have
+type Action @entity {
+    act: Acts!              # Action name
+    arg: String!            # Action argument
+    art: BigInt!            # Debt DAI at block                        Was BigFloat!
+    block: Int!             # Block number
+    deleted: Boolean!       # True if the cup has been shut
+    id: ID!                 # Cup Id
+    ink: BigInt!            # Collateral PETH at block                 Was BigFloat!
+    lad: String!            # Cup owner
+    pip: BigInt!            # USD/ETH price at block                   Was BigFloat!
+    ratio: BigInt           # Collateralisation ratio at block         Was BigFloat
+    tab: BigInt             # Collateral USD at block                  Was BigFloat
+    time: Int!              # Block timestamp
+    tx: String              # Transaction hash
+
+    sender: Bytes!
+}
+
+enum Acts {
+    OPEN
+    GIVE
+    LOCK
+    FREE
+    DRAW
+    WIPE
+    SHUT
+    BITE
+}
+
+
+####################Debt Market#########################
+
+# Tap - aka Debt Market. The tap is a liquidator
+# System surplus accumulates as excess DAI, which are sold in exchange for collateral (PETH) via BOOM
+# Seized Collateral from Forced Liquidations (PETH) is also sent to the tap where it is sold for DAI via bust
+# the tap tries to minimize its tokens balances - DAI and SIN can be bought on market to cancel each other out.
+# Tap can BOOM - sell Dai in returh for PETH (decrease joy, woe, PETH)
+# Tap can BUST - sell PETH in return for DAI (decreases fog, increases joy, woe, possibly PETH)
+type Tap @entity {
+    id: ID!
+    joy: BigInt!              # DAI balance. Surplus transferred from DRIP
+    woe: BigInt!              # SIN balance. Bad debt transferred from BITE
+    fog: BigInt!              # PETH balance. Collateral pending liquidation
+    s2s: BigInt!              # Derived price, the price of PETH in DAI
+}
