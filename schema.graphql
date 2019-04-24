@@ -55,6 +55,22 @@ type Tub @entity {
     weth: BigInt!           # total WETH Holdings
 }
 
+type CountLogNote @entity {
+    id: ID!
+    count: BigInt!
+}
+
+type TempLogNote @entity {
+    id: ID! # just a count
+    sig: Bytes! # determines which function was called
+    msgSender: Bytes! # guy
+    foo: Bytes!
+    bar: Bytes!
+    msgValue: BigInt! # wad
+    msgData: Bytes! # fax
+    contractAddress: Bytes! # so we can filter lognotes on many different contracts
+}
+
 # aka CDP
 type Cup @entity {
     act: Action!            # Most recent cup action
